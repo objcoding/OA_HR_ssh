@@ -15,7 +15,7 @@
 	
 	<!-- 开启扫描与自动装配,用于零配置支持(注解) -->
 	<context:component-scan base-package="cn.edu.gcu.oa"></context:component-scan>
-	
+		
 	<!-- 配置c3p0连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<!-- 注入属性值 -->
@@ -60,6 +60,7 @@
 			<list>
 				<value>cn/edu/gcu/oa/entity/User.hbm.xml</value>
 				<value>cn/edu/gcu/oa/entity/Role.hbm.xml</value>
+				<value>cn/edu/gcu/oa/entity/Department.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.gcu.oa.entity.User;
 
-@Service(value = "testService")
+
+@Service
 public class TestService {
 
 	@Resource(name = "sessionFactory")

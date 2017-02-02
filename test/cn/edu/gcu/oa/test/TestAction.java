@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-@Controller(value = "testAction")
+@Controller
 @Scope("prototype")
 public class TestAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;

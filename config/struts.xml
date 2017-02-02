@@ -14,15 +14,30 @@
     <package name="default" namespace="/" extends="struts-default">
     	<!-- 测试 -->
 		<action name="test" class="testAction">
-			<result name="success">/WEB-INF/jsp/test.jsp</result>
+			<result name="success">/test.jsp</result>
 		</action>
+		
 		<!-- 岗位管理action -->
 		<action name="role_*" class="roleAction" method="{1}">
 			<result name="list">/WEB-INF/jsp/roleAction/list.jsp</result>
-			<result name="toList" type="redirecAction">role_list</result>
-			<result name="addUI">/WEB-INF/jsp/roleAction/addUI.jsp</result>
-			<result name="editUI">/WEB-INF/jsp/roleAction/editUI.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/roleAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">role_list</result>
 		</action>
+		
+		<!-- 部门管理action -->
+		<action name="department_*" class="departmentAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/departmentAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/departmentAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">department_list</result>
+		</action>
+		
+		<!-- 员工管理action -->
+		<action name="user_*" class="userAction" method="{1}">
+			<result name="list">/WEB-INF/jsp/userAction/list.jsp</result>
+			<result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
+			<result name="toList" type="redirectAction">user_list?parentId=${parentId}</result>
+		</action>
+		
 		
     </package>
 </struts>
