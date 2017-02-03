@@ -19,10 +19,10 @@
 		
 		
 		<!-- department属性，员工与部门的多对一 -->
-		<many-to-one name="department" class="Department" column="departmentId"></many-to-one>
+		<many-to-one name="department" class="Department" column="departmentId" lazy="false"></many-to-one>
 		
 		<!-- roles属性，员工与岗位的多对多 -->
-		<set name="roles" table="t_user_role">
+		<set name="roles" table="t_user_role" lazy="false">
 			<key column="userId"></key>
 			<many-to-many class="Role" column="roleId"></many-to-many>
 		</set>

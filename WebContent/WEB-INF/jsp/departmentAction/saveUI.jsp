@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>部门设置</title>
+	    <!-- 抽取添加与修改JSP页面中的公共代码 -->
 	<%@ include file="/WEB-INF/jsp/public/commons.jspf" %>
 </head>
 <body>
@@ -33,6 +34,7 @@
                 <table cellpadding="0" cellspacing="0" class="mainForm">
                     <tr><td width="100">上级部门</td>
                         <td>
+                       		<!-- parnetId与下面的id同步 -->
                         	<s:select name="parentId" cssClass="SelectStyle"
                         		list="#departmentList" listKey="id" listValue="name"
                         		headerKey="" headerValue="==请选择部门=="

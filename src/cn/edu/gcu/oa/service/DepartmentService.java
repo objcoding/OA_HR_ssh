@@ -2,19 +2,13 @@ package cn.edu.gcu.oa.service;
 
 import java.util.List;
 
-import cn.edu.gcu.oa.base.BaseService;
+import cn.edu.gcu.oa.base.DaoSupport;
 import cn.edu.gcu.oa.entity.Department;
 
-public interface DepartmentService extends BaseService<Department> {
+public interface DepartmentService extends DaoSupport<Department> {
 
-	List<Department> findAll();
+	List<Department> findTopList();
 
-	void delete(Long id);
-
-	Department getById(Long id);
-
-	void update(Department department);
-
-	void save(Department department);
+	List<Department> findChildren(Long parentId);
 
 }

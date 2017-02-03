@@ -19,12 +19,12 @@
 		</set>
 
 		<!-- parent属性，与上级部门的多对一 -->
-		<many-to-one name="parent" class="Department" column="parentId"></many-to-one>
+		<many-to-one name="parent" class="Department" column="parentId" lazy="false"></many-to-one>
 
 		<!-- children属性，与下级部门的一对多
 			order-by属性：指定的是sql的orderby子句内容
 		 -->
-		<set name="children" cascade="delete" order-by="id ASC">
+		<set name="children" cascade="delete" order-by="id ASC" lazy="false">
 			<key column="parentId"></key>
 			<one-to-many class="Department" />
 		</set>

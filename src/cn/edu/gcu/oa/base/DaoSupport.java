@@ -1,9 +1,8 @@
 package cn.edu.gcu.oa.base;
 
-import java.io.Serializable;
 import java.util.List;
 
-public interface BaseDao<T> {
+public interface DaoSupport<T> {
 
 	/**
 	 * 保存实体
@@ -11,7 +10,7 @@ public interface BaseDao<T> {
 	 * @param entity
 	 * @return
 	 */
-	Serializable save(T entity);
+	void save(T entity);
 
 	/**
 	 * 删除实体

@@ -21,14 +21,15 @@
 		<action name="role_*" class="roleAction" method="{1}">
 			<result name="list">/WEB-INF/jsp/roleAction/list.jsp</result>
 			<result name="saveUI">/WEB-INF/jsp/roleAction/saveUI.jsp</result>
-			<result name="toList" type="redirectAction">role_list</result>
+															<!-- 用于显示当前上级部门列表 -->
+			<result name="toList" type="redirectAction">role_list?parentId=${parentId}</result>
 		</action>
 		
 		<!-- 部门管理action -->
 		<action name="department_*" class="departmentAction" method="{1}">
 			<result name="list">/WEB-INF/jsp/departmentAction/list.jsp</result>
 			<result name="saveUI">/WEB-INF/jsp/departmentAction/saveUI.jsp</result>
-			<result name="toList" type="redirectAction">department_list</result>
+			<result name="toList" type="redirectAction">department_list?parentId=${parentId}</result>
 		</action>
 		
 		<!-- 员工管理action -->
