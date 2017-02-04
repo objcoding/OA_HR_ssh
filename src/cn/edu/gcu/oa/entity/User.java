@@ -1,7 +1,10 @@
 package cn.edu.gcu.oa.entity;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.opensymphony.xwork2.ActionContext;
 
 /**
  * 用户
@@ -21,6 +24,78 @@ public class User {
 	private Long id;
 	private Department department;
 	private Set<Role> roles = new HashSet<Role>();
+	
+	/**
+	 * 判断本用户是否有指定名称的权限
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean hasPrivilegeByName(String name) {
+		// 超级管理有所有的权限
+		if (isAdmin()) {
+			return true;
+		}
+
+		// 普通用户要判断是否含有这个权限
+		for (Role role : roles) {
+			for (Privilege priv : role.getPrivileges()) {
+				if (priv.getName().equals(name)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 判断本用户是否有指定URL的权限
+	 * 
+	 * @param privUrl
+	 * @return
+	 */
+	public boolean hasPrivilegeByUrl(String privUrl) {
+		// 超级管理有所有的权限
+		if (isAdmin()) {
+			return true;
+		}
+
+		// >> 去掉后面的参数
+		int pos = privUrl.indexOf("?");
+		if (pos > -1) {
+			privUrl = privUrl.substring(0, pos);
+		}
+		// >> 去掉UI后缀
+		if (privUrl.endsWith("UI")) {
+			privUrl = privUrl.substring(0, privUrl.length() - 2);
+		}
+
+		// 如果本URL不需要控制，则登录用户就可以使用
+		//因为需要给那些没设置权限的url给用户使用
+		@SuppressWarnings("unchecked")
+		Collection<String> allPrivilegeUrls = (Collection<String>) ActionContext.getContext().getApplication().get("allPrivilegeUrls");
+		if (!allPrivilegeUrls.contains(privUrl)) {
+			return true;
+		} else {
+			// 普通用户要判断是否含有这个权限
+			for (Role role : roles) {
+				for (Privilege priv : role.getPrivileges()) {
+					if (privUrl.equals(priv.getUrl())) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+	}
+	/**
+	 * 判断本用户是否是超级管理员
+	 * 
+	 * @return
+	 */
+	private boolean isAdmin() {
+		return "admin".equals(loginName);
+	}
 
 	@Override
 	public String toString() {

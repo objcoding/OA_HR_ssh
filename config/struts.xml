@@ -12,6 +12,26 @@
     <constant name="struts.ui.theme" value="simple" />
 	
     <package name="default" namespace="/" extends="struts-default">
+    
+    	<interceptors>
+    		<!-- 声明一个拦截器栈 -->
+    		<interceptor name="checkPrivilegeInterceptor" 
+    					 class="cn.edu.gcu.oa.web.interceptor.CheckPrivilegeInterceptor">
+    		</interceptor>
+    	
+    		<!-- 定义拦截器栈 -->
+    		<interceptor-stack name="defaultStack">
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    			<interceptor-ref name="checkPrivilegeInterceptor"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+    	
+    	<!-- 全局结果页面 -->
+    	<global-results>
+    		<result name="loginUI">/WEB-INF/jsp/userAction/loginUI.jsp</result>
+    		<result name="noPrivilegeError">/noPrivilegeError.jsp</result>
+    	</global-results>
+    
     	<!-- 测试 -->
 		<action name="test" class="testAction">
 			<result name="success">/test.jsp</result>
@@ -21,6 +41,7 @@
 		<action name="role_*" class="roleAction" method="{1}">
 			<result name="list">/WEB-INF/jsp/roleAction/list.jsp</result>
 			<result name="saveUI">/WEB-INF/jsp/roleAction/saveUI.jsp</result>
+			<result name="setPrivilegeUI">/WEB-INF/jsp/roleAction/setPrivilegeUI.jsp</result>
 															<!-- 用于显示当前上级部门列表 -->
 			<result name="toList" type="redirectAction">role_list?parentId=${parentId}</result>
 		</action>
@@ -36,9 +57,17 @@
 		<action name="user_*" class="userAction" method="{1}">
 			<result name="list">/WEB-INF/jsp/userAction/list.jsp</result>
 			<result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
-			<result name="toList" type="redirectAction">user_list?parentId=${parentId}</result>
+			<result name="toList" type="redirectAction">user_list</result>
+			
+			<result name="loginUI">/WEB-INF/jsp/userAction/loginUI.jsp</result>
+			<result name="logout">/WEB-INF/jsp/userAction/logout.jsp</result>
+			<result name="toIndex" type="redirect">/index.jsp</result>
 		</action>
 		
+		<!-- 首页 -->
+		<action name="home_*" class="homeAction" method="{1}">
+			<result name="{1}">/WEB-INF/jsp/homeAction/{1}.jsp</result>
+		</action>
 		
     </package>
 </struts>

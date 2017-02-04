@@ -8,6 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 import cn.edu.gcu.oa.service.DepartmentService;
+import cn.edu.gcu.oa.service.PrivilegeService;
 import cn.edu.gcu.oa.service.RoleService;
 import cn.edu.gcu.oa.service.UserService;
 
@@ -47,5 +48,7 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	protected RoleService roleService;
 	@Resource(name = "userServiceImpl")
 	protected UserService userService;
+	@Resource(name = "privilegeServiceImpl")
+	protected PrivilegeService privilegeService;
 	
 }

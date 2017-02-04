@@ -15,6 +15,15 @@ public class Role {
 	private String name;
 	private String description;
 	private Set<User> users = new HashSet<User>();
+	private Set<Privilege> privileges = new HashSet<Privilege>();
+	
+	public Set<Privilege> getPrivileges() {
+		return privileges;
+	}
+
+	public void setPrivileges(Set<Privilege> privileges) {
+		this.privileges = privileges;
+	}
 
 	@Override
 	public String toString() {

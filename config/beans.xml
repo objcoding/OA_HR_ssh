@@ -61,6 +61,7 @@
 				<value>cn/edu/gcu/oa/entity/User.hbm.xml</value>
 				<value>cn/edu/gcu/oa/entity/Role.hbm.xml</value>
 				<value>cn/edu/gcu/oa/entity/Department.hbm.xml</value>
+				<value>cn/edu/gcu/oa/entity/Privilege.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
