@@ -3,6 +3,11 @@ package cn.edu.gcu.oa.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * 权限
+ * @author zch
+ *
+ */
 public class Privilege {
 	private Long id;
 	private String url;

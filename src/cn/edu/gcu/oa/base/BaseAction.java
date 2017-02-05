@@ -4,12 +4,18 @@ import java.lang.reflect.ParameterizedType;
 
 import javax.annotation.Resource;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+import cn.edu.gcu.oa.entity.User;
 import cn.edu.gcu.oa.service.DepartmentService;
+import cn.edu.gcu.oa.service.ForumManageService;
+import cn.edu.gcu.oa.service.ForumService;
 import cn.edu.gcu.oa.service.PrivilegeService;
+import cn.edu.gcu.oa.service.ReplyService;
 import cn.edu.gcu.oa.service.RoleService;
+import cn.edu.gcu.oa.service.TopicService;
 import cn.edu.gcu.oa.service.UserService;
 
 /**
@@ -50,5 +56,24 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	protected UserService userService;
 	@Resource(name = "privilegeServiceImpl")
 	protected PrivilegeService privilegeService;
+	@Resource(name = "forumManageServiceImpl")
+	protected ForumManageService forumManageService;
+	@Resource(name = "forumServiceImpl")
+	protected ForumService forumService;
+	@Resource(name = "topicServiceImpl")
+	protected TopicService topicService;
+	@Resource(name = "replyServiceImpl")
+	protected ReplyService replyService;
+	
+	/************************ 其它公共方法 ******************************************/
+	
+	/**
+	 * 获取当前登录的用户
+	 * 
+	 * @return
+	 */
+	protected User getCurrentUser() {
+		return (User) ActionContext.getContext().getSession().get("user");
+	}
 	
 }

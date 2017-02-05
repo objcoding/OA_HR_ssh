@@ -17,7 +17,7 @@ import cn.edu.gcu.oa.entity.User;
 public class Installer {
 
 	@Resource
-	private SessionFactory sessionFactory;
+	public SessionFactory sessionFactory;
 
 	/**
 	 * 执行安装
@@ -90,8 +90,9 @@ public class Installer {
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) {
-		ApplicationContext ac = new ClassPathXmlApplicationContext("classpath:beans.xml");
-		Installer installer = (Installer) ac.getBean("installer");
-		installer.install();
+		 ApplicationContext ac = new
+		 ClassPathXmlApplicationContext("classpath:beans.xml");
+		 Installer installer = (Installer) ac.getBean("installer");
+		 installer.install();
 	}
 }
