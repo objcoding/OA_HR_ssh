@@ -38,6 +38,10 @@ public class ReplyAction extends BaseAction<Reply> {
 		return "addUI";
 	}
 	
+	/**
+	 * 发表新回复
+	 * @return
+	 */
 	public String add(){
 		// 封装
 		// >> 表单字段，已经封装了title, content

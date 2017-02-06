@@ -1,7 +1,6 @@
 package cn.edu.gcu.oa.web.action;
 
 import java.util.Date;
-import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
@@ -11,7 +10,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 import cn.edu.gcu.oa.base.BaseAction;
 import cn.edu.gcu.oa.entity.Forum;
-import cn.edu.gcu.oa.entity.Reply;
+import cn.edu.gcu.oa.entity.PageBean;
 import cn.edu.gcu.oa.entity.Topic;
 
 @Controller
@@ -19,6 +18,7 @@ import cn.edu.gcu.oa.entity.Topic;
 public class TopicAction extends BaseAction<Topic> {
 	private static final long serialVersionUID = 1L;
 	
+	//封装所属版块id
 	private Long forumId; 
 	public Long getForumId() {
 		return forumId;
@@ -26,6 +26,26 @@ public class TopicAction extends BaseAction<Topic> {
 	public void setForumId(Long forumId) {
 		this.forumId = forumId;
 	}
+	
+	//封装分页相关参数
+	private int pageNum = 1;//当前页,如果页面不传当前页,就默认第一页
+	private int pageSize = 3;//每页显示数目
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+	
 	
 	/**
 	 * 显示单个主题（主帖+回帖列表）
@@ -38,8 +58,12 @@ public class TopicAction extends BaseAction<Topic> {
 		ActionContext.getContext().put("topic", topic);
 		
 		// 准备数据：replyList
-		List<Reply> replyList = replyService.findByTopic(topic);
-		ActionContext.getContext().put("replyList", replyList);
+		// List<Reply> replyList = replyService.findByTopic(topic);
+		// ActionContext.getContext().put("replyList", replyList);
+		
+		//分页数据:replyList
+		PageBean pageBean = replyService.getPageBeanByTopic(pageNum, pageSize, topic);
+		ActionContext.getContext().getValueStack().push(pageBean);
 		
 		return "show";
 	}

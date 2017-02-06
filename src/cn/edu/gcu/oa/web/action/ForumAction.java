@@ -9,12 +9,32 @@ import com.opensymphony.xwork2.ActionContext;
 
 import cn.edu.gcu.oa.base.BaseAction;
 import cn.edu.gcu.oa.entity.Forum;
-import cn.edu.gcu.oa.entity.Topic;
+import cn.edu.gcu.oa.entity.PageBean;
 
 @Controller
 @Scope("prototype")
 public class ForumAction extends BaseAction<Forum> {
 	private static final long serialVersionUID = 1L;
+	
+	//封装分页信息
+	private int pageNum = 1;//当前页,如果页面不传当前页,就默认第一页
+	private int pageSize = 3;//每页显示数目
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+	
 	
 	/**
 	 * 显示所有版块
@@ -39,8 +59,13 @@ public class ForumAction extends BaseAction<Forum> {
 		ActionContext.getContext().put("forum", forum);
 		
 		//显示当前版块所有的主题
-		List<Topic> topics = topicService.findByForum(forum);
-		ActionContext.getContext().put("topicList", topics);
+		// List<Topic> topics = topicService.findByForum(forum);
+		// ActionContext.getContext().put("topicList", topics);
+		
+		//分页准备主题数据:topics
+		PageBean pageBean = topicService.getPageBeanByForum(pageNum, pageSize, forum);
+		ActionContext.getContext().getValueStack().push(pageBean);
+		
 		return  "show";
 	}
 }

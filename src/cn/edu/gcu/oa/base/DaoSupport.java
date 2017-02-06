@@ -2,6 +2,9 @@ package cn.edu.gcu.oa.base;
 
 import java.util.List;
 
+import cn.edu.gcu.oa.entity.PageBean;
+import cn.edu.gcu.oa.util.QueryHelper;
+
 public interface DaoSupport<T> {
 
 	/**
@@ -48,4 +51,6 @@ public interface DaoSupport<T> {
 	 * @return
 	 */
 	List<T> findAll();
+
+	PageBean getPageBean(int pageNum, int pageSize, QueryHelper queryHelper);
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import cn.edu.gcu.oa.base.DaoSupportImpl;
 import cn.edu.gcu.oa.entity.Forum;
+import cn.edu.gcu.oa.entity.PageBean;
 import cn.edu.gcu.oa.entity.Reply;
 import cn.edu.gcu.oa.entity.Topic;
 import cn.edu.gcu.oa.service.ReplyService;
@@ -40,5 +41,27 @@ public class ReplyServiceImpl extends DaoSupportImpl<Reply> implements ReplyServ
 		return (List<Reply>)getSession().createQuery("FROM Reply r WHERE r.topic=? ORDER BY r.postTime")
 				.setParameter(0, topic)
 				.list();
+	}
+
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public PageBean getPageBeanByTopic(int pageNum, int pageSize, Topic topic) {
+		
+		//按每页显示数查询回复文章
+		List recordList = getSession().createQuery("FROM Reply r WHERE r.topic=? ORDER BY r.postTime")
+				.setParameter(0, topic)
+				.setFirstResult((pageNum -1) * pageSize)
+				.setMaxResults(pageSize)
+				.list();
+		
+		//查询所属主题的回复数量
+		Long recordCount = (Long) getSession()
+				.createQuery("SELECT COUNT(*) FROM Reply r WHERE r.topic=?")
+				.setParameter(0, topic)
+				.uniqueResult();
+		
+		//返回一个pageBean
+		return new PageBean(pageNum, pageSize, recordCount.intValue(), recordList);
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import cn.edu.gcu.oa.base.DaoSupportImpl;
 import cn.edu.gcu.oa.entity.Forum;
+import cn.edu.gcu.oa.entity.PageBean;
 import cn.edu.gcu.oa.entity.Topic;
 import cn.edu.gcu.oa.service.TopicService;
 
@@ -44,6 +45,31 @@ public class TopicServiceImpl extends DaoSupportImpl<Topic> implements TopicServ
 		forum.setArticleCount(forum.getArticleCount() + 1);// 文章数量（主题数+回复数）
 		forum.setLastTopic(topic); // 最后发表的主题
 		getSession().update(forum);
+	}
+
+	@Override
+	public PageBean getPageBeanByForum(int pageNum, int pageSize, Forum forum) {
+		
+		//按每页显示数查询版块所属的主题
+		@SuppressWarnings("rawtypes")
+		List topics = getSession()
+					/*
+					 * 排序语句解释:2置顶1精华0普通,当主题类型为2时就是2,当主题类型为其它时就是0(为了普通贴和精华帖互不干扰)
+					 * 然后以这个来降序,再用最后更新时间降序
+					 */
+				.createQuery("FROM Topic t WHERE t.forum=? ORDER BY (CASE t.type WHEN 2 THEN 2 ELSE 0 END) DESC, t.lastUpdateTime DESC")
+				.setParameter(0, forum)
+				.setFirstResult((pageNum -1) * pageSize)
+				.setMaxResults(pageSize)
+				.list();
+		
+		//查询版块所属的主题总数目
+		Long recordCount = (Long) getSession()
+				.createQuery("SELECT COUNT(*) FROM Topic t WHERE t.forum=?")
+				.setParameter(0, forum)
+				.uniqueResult();
+		
+		return new PageBean(pageNum, pageSize, recordCount.intValue(), topics);
 	}
 	
 }
